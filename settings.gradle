@@ -1,1 +1,1 @@
-include ':app', ':Main_model', ':Second_model', ':lib_common', ':17kouyu_lib', ':TBKTDemo', ':Ticket'
+include ':Main_model', ':Second_model', ':Third_model', ':lib_common'
