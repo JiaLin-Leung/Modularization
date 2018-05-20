@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector;
 import android.view.GestureDetector.OnGestureListener;
@@ -35,6 +36,7 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
     protected void onResume() {
         super.onResume();
         SharedPreferences sp = SpUtils.get(MainActivity.this);
+        detector = new GestureDetector(MainActivity.this);
         user_String = sp.getString("user_name","");
         nickname = sp.getString("nickname","");
     }
@@ -158,12 +160,13 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
 
     }
 
-    //    @Override
-//    public boolean onTouchEvent(MotionEvent event) {
-//        // TODO Auto-generated method stub
-//        //将该Activity上触碰事件交给GestureDetector处理
-//        return detector.onTouchEvent(event);
-//    }
+        @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        //将该Activity上触碰事件交给GestureDetector处理
+
+        return detector.onTouchEvent(event);
+    }
     @Override
     public boolean onDown(MotionEvent arg0) {
         // TODO Auto-generated method stub
@@ -186,8 +189,9 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
         //当是Fragment0的时候
         if(MARK==0)
         {
-            if(arg1.getX()>arg0.getX()+DISTANT)
+            if(arg1.getX()<arg0.getX()+DISTANT)
             {
+                Log.e("1212","111");
                 getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
                         .show(fragments[1]).commit();
                 linearLayouts[1].setBackgroundResource(R.drawable.lay_select_bg);
@@ -196,24 +200,27 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
             }
             else
             {
+                Log.e("1212","222");
                 linearLayouts[0].setBackgroundResource(R.drawable.lay_select_bg);
-                textViews[0].setTextColor(getResources().getColor(R.color.black));
+                textViews[0].setTextColor(getResources().getColor(R.color.lightseagreen));
             }
 
         }
         //当是Fragment1的时候
         else if (MARK==1)
         {
-            if(arg1.getX()>arg0.getX()+DISTANT)
+            if(arg1.getX()<arg0.getX()+DISTANT)
             {
+                Log.e("1212","333");
                 getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
                         .show(fragments[2]).commit();
                 linearLayouts[2].setBackgroundResource(R.drawable.lay_select_bg);
                 textViews[2].setTextColor(getResources().getColor(R.color.lightseagreen));
                 MARK=2;
             }
-            else if(arg0.getX()>arg1.getX()+DISTANT)
+            else if(arg0.getX()<arg1.getX()+DISTANT)
             {
+                Log.e("1212","444");
                 getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
                         .show(fragments[0]).commit();
                 linearLayouts[0].setBackgroundResource(R.drawable.lay_select_bg);
@@ -222,16 +229,27 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
             }
             else
             {
+                Log.e("1212","555");
                 linearLayouts[1].setBackgroundResource(R.drawable.lay_select_bg);
-                textViews[1].setTextColor(getResources().getColor(R.color.black));
+                textViews[1].setTextColor(getResources().getColor(R.color.lightseagreen));
             }
         }
         //当是Fragment2的时候
         else if(MARK==2)
         {
-            if(arg0.getX()>arg1.getX()+DISTANT)
+            if(arg1.getX()<arg0.getX()+DISTANT)
             {
-                getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2])
+                Log.e("1212","666");
+                getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
+                        .show(fragments[3]).commit();
+                linearLayouts[3].setBackgroundResource(R.drawable.lay_select_bg);
+                textViews[3].setTextColor(getResources().getColor(R.color.lightseagreen));
+                MARK=3;
+            }
+            else if(arg0.getX()<arg1.getX()+DISTANT)
+            {
+                Log.e("1212","777");
+                getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
                         .show(fragments[1]).commit();
                 linearLayouts[1].setBackgroundResource(R.drawable.lay_select_bg);
                 textViews[1].setTextColor(getResources().getColor(R.color.lightseagreen));
@@ -239,8 +257,27 @@ public class MainActivity extends BaseActivity implements OnGestureListener {
             }
             else
             {
+                Log.e("1212","888");
                 linearLayouts[2].setBackgroundResource(R.drawable.lay_select_bg);
-                textViews[2].setTextColor(getResources().getColor(R.color.black));
+                textViews[2].setTextColor(getResources().getColor(R.color.lightseagreen));
+            }
+        }
+        else if(MARK==3)
+        {
+            if(arg0.getX()<arg1.getX()+DISTANT)
+            {
+                Log.e("1212","999");
+                getSupportFragmentManager().beginTransaction().hide(fragments[0]).hide(fragments[1]).hide(fragments[2]).hide(fragments[3])
+                        .show(fragments[2]).commit();
+                linearLayouts[2].setBackgroundResource(R.drawable.lay_select_bg);
+                textViews[2].setTextColor(getResources().getColor(R.color.lightseagreen));
+                MARK=2;
+            }
+            else
+            {
+                Log.e("1212","101010");
+                linearLayouts[3].setBackgroundResource(R.drawable.lay_select_bg);
+                textViews[3].setTextColor(getResources().getColor(R.color.lightseagreen));
             }
         }
         return false;
